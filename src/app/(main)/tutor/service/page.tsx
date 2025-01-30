@@ -28,7 +28,6 @@ const getServices = async (userId: string) => {
 const MyServices = async () => {
   const user = await getUserData()
   const services = await getServices(user?.id as string);
-  console.log(services)
   return (
     <>
       <Topbar className='justify-between'>

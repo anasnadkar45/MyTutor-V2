@@ -14,9 +14,7 @@ import { SubmitButton } from '@/components/global/SubmitButton'
 export const BookingCard = ({ booking }: { booking: BookingType }) => {
     const initialState = { message: "", status: undefined, errors: {} }
     const [state, formAction] = useActionState(cancleBooking, initialState);
-    console.log(booking)
     useEffect(() => {
-        console.log("State updated:", state)
         if (state?.status === "success") {
             toast.success(state.message)
             // return redirect('/tutor/service')

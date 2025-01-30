@@ -20,7 +20,6 @@ const getServiceData = async (serviceId: string) => {
 }
 const page = async ({ params }: { params: { id: string } }) => {
     const service = await getServiceData(params.id);
-    console.log(service)
     return (
         <div>
             <Topbar className='flex justify-between text-foreground'>

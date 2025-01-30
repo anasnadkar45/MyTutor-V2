@@ -34,7 +34,6 @@ const getBookings = async (userId: string) => {
 const page = async () => {
     const user = await getUserData()
     const bookings = await getBookings(user?.id as string)
-    console.log(bookings)
     return (
         <div>
             <Topbar className='justify-between'>

@@ -31,8 +31,6 @@ export const Onboarding = () => {
   const [experience, setExperience] = useState<string>('')
   const [subjectIntrested, setSubjectInterested] = useState<string>('')
 
-  console.log(accountName, experience, subjectIntrested)
-
   const userTypeOptions = [
     {
       id: "Tutor",
