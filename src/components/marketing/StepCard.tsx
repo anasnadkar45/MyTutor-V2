@@ -14,7 +14,7 @@ const StepCard: React.FC<StepCardProps> = ({ number, title, description, icon: I
   return (
     <motion.div
       key={number}
-      className="relative bg-card rounded-2xl shadow-lg shadow-primary/10 overflow-hidden"
+      className="relative bg-[#111312] rounded-2xl shadow-lg shadow-primary/10 overflow-hidden"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -29,12 +29,12 @@ const StepCard: React.FC<StepCardProps> = ({ number, title, description, icon: I
             <span className="text-4xl font-bold text-primary">{number}</span>
           </div>
         </div>
-        <h2 className="text-xl font-semibold mb-2">{title}</h2>
+        <h2 className="text-xl font-semibold mb-2 text-white">{title}</h2>
         <p className="text-muted-foreground">{description}</p>
       </div>
 
       {/* Inner shadow effect */}
-      <div className="absolute inset-0 shadow-[inset_0_0_30px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] rounded-2xl z-10" />
+      <div className="absolute inset-0 shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] rounded-2xl z-10" />
 
       {/* Hover effect */}
       <motion.div

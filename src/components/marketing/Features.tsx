@@ -59,7 +59,7 @@ export const Features = () => {
 
                 <div className="flex flex-col items-center justify-center text-center gap-y-4 bg-background/0">
                     <Container delay={0.15}>
-                        <h1 className="text-3xl md:text-4xl font-bold text-center !leading-tight max-w-4xl mx-auto">
+                        <h1 className="text-3xl md:text-4xl font-bold text-center text-white !leading-tight max-w-4xl mx-auto">
                             The Ultimate {" "}
                             <span className="">
                                 Product {" "}
