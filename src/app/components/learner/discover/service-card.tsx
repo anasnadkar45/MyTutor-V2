@@ -10,7 +10,7 @@ import Image from "next/image"
 export function ServiceCard({ service, parentRoute }: { service: ServiceProps, parentRoute: string }) {
     return (
         <Link href={`/${parentRoute}/${service.id}`}>
-            <Card className="w-full max-w-md min-h-[230px] flex flex-col justify-between bg-card border-2 hover:shadow-lg hover:bg-secondary/50 transition-shadow">
+            <Card className="w-full max-w-md min-h-[260px] flex flex-col justify-between bg-card border-2 hover:shadow-lg hover:bg-secondary/50 transition-shadow">
                 <CardHeader className="space-y-1 pb-2">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-1">

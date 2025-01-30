@@ -53,43 +53,45 @@ export const BookingCard = ({ booking }: { booking: BookingType }) => {
     }
 
     return (
-        <Card className="w-full max-w-md">
-            <CardHeader>
-                <CardTitle className="flex justify-between items-center">
-                    <h2 className="text-xl font-bold">{booking.Service?.title || "Untitled Service"}</h2>
-                    <Badge variant={getBookingStatus(booking) === "Live" ? "default" : "secondary"}>
-                        {getBookingStatus(booking)}
-                    </Badge>
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                    <div>
-                        <p className="text-sm text-muted-foreground">Service Type</p>
-                        <p className="font-medium">{booking.bookingType}</p>
-                    </div>
-                    {booking.Service && (
+        <Card className="w-full max-w-md flex flex-col justify-between">
+            <>
+                <CardHeader>
+                    <CardTitle className="flex justify-between items-center">
+                        <h2 className="text-xl font-bold">{booking.Service?.title || "Untitled Service"}</h2>
+                        <Badge variant={getBookingStatus(booking) === "Live" ? "default" : "secondary"}>
+                            {getBookingStatus(booking)}
+                        </Badge>
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <div className="flex justify-between items-center">
                         <div>
-                            <p className="text-sm text-muted-foreground">Price</p>
-                            <p className="font-medium">₹{booking.Service.price.toFixed(2)}</p>
+                            <p className="text-sm text-muted-foreground">Service Type</p>
+                            <p className="font-medium">{booking.bookingType}</p>
                         </div>
+                        {booking.Service && (
+                            <div>
+                                <p className="text-sm text-muted-foreground">Price</p>
+                                <p className="font-medium">₹{booking.Service.price.toFixed(2)}</p>
+                            </div>
+                        )}
+                    </div>
+                    {booking.AvailableSlot && (
+                        <>
+                            <div className="flex items-center">
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                <p>{formatDate(booking.AvailableSlot.startTime)}</p>
+                            </div>
+                            <div className="flex items-center">
+                                <ClockIcon className="mr-2 h-4 w-4" />
+                                <p>
+                                    {formatTime(booking.AvailableSlot.startTime)} - {formatTime(booking.AvailableSlot.endTime)}
+                                </p>
+                            </div>
+                        </>
                     )}
-                </div>
-                {booking.AvailableSlot && (
-                    <>
-                        <div className="flex items-center">
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            <p>{formatDate(booking.AvailableSlot.startTime)}</p>
-                        </div>
-                        <div className="flex items-center">
-                            <ClockIcon className="mr-2 h-4 w-4" />
-                            <p>
-                                {formatTime(booking.AvailableSlot.startTime)} - {formatTime(booking.AvailableSlot.endTime)}
-                            </p>
-                        </div>
-                    </>
-                )}
-            </CardContent>
+                </CardContent>
+            </>
             <CardFooter className="flex justify-between">
                 <form action={formAction}>
                     <input type="hidden" name='bookingId' value={booking.id} />

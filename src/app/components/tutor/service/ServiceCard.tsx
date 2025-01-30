@@ -10,7 +10,7 @@ import Image from "next/image"
 export function ServiceCard({ service }: { service: ServiceProps}) {
     return (
         <Link href={`/tutor/service/${service.id}`}>
-            <Card className="w-full max-w-md bg-card border-2 min-h-[230px] flex flex-col justify-between hover:shadow-lg hover:bg-secondary/50 transition-shadow">
+            <Card className="w-full max-w-md bg-card border-2 min-h-[260px] flex flex-col justify-between hover:shadow-lg hover:bg-secondary/50 transition-shadow">
                 <CardHeader className="space-y-1 pb-2">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-1">
@@ -23,7 +23,7 @@ export function ServiceCard({ service }: { service: ServiceProps}) {
                         </Avatar>
                         
                     </div>
-                    <h3 className="text-xl font-semibold tracking-tight">{service.title}</h3>
+                    <h3 className="text-xl font-semibold tracking-tight line-clamp-2">{service.title}</h3>
                     <p className="text-muted-foreground line-clamp-2">{service.description}</p>
                 </CardHeader>
                 <CardContent>
