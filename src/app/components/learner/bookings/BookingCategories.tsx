@@ -62,7 +62,7 @@ export const BookingCategories: React.FC<BookingCategoriesProps> = ({ bookings }
       </TabsList>
       {categories.map((category) => (
         <TabsContent key={category.id} value={category.id}>
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto">
             {filteredBookings(category.id).map((booking) => (
               <BookingCard key={booking.id} booking={booking} />
             ))}

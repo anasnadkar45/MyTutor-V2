@@ -75,7 +75,7 @@ const TutorDashboardPage = async () => {
       <Wrapper>
         <div className="space-y-6">
           <DashboardStats stats={stats} />
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
             <UpcomingBookings bookings={bookings as BookingType[]} />
             <YourServices services={services as ServiceProps[]} />
           </div>
