@@ -42,7 +42,7 @@ export function TutorMatcher({ learnerId }: { learnerId: string }) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline"><span><Sparkle /></span> AI Tutor Match</Button>
+                <Button><span><Sparkle /></span> AI Tutor Match</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] w-full max-w-md mx-auto mb-8 shadow-lg">
                 <DialogHeader>

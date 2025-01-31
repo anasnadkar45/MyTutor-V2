@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "./auth";
+import prisma from "./db";
 
 export async function requireUser() {
   const session = await auth();
@@ -11,9 +12,18 @@ export async function requireUser() {
   return session;
 }
 
-export async function getUserData(){
+export async function getUserData() {
   const session = await auth();
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session?.user?.id
+    },
+    include:{
+      onboarding:true
+    }
+  })
   return {
-    userId:session?.user?.id
+    userId: session?.user?.id,
+    user
   }
 }
