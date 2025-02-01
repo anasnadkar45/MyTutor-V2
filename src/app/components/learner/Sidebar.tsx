@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Crown, Globe, HomeIcon, PhoneCallIcon, Settings, UserCircle } from 'lucide-react'
+import { Crown, Globe, HeartHandshake, HomeIcon, PhoneCallIcon, Settings, UserCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Logo from '../../../../public/logo.svg'
@@ -25,6 +25,12 @@ const sidebarLinks = [
             { id: 1, name: "Discover", href: `/learner/discover`, icon: Globe },
         ],
     },
+    {
+        category: "AI FEATURES",
+        links: [
+            { id: 1, name: "Study Buddy", href: `/learner/study-buddy`, icon: HeartHandshake },
+        ],
+    }
 ]
 
 export function Sidebar() {

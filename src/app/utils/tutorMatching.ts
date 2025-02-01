@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai"
 import prisma from "@/app/utils/db"
 import { ServiceType } from "@prisma/client"
 
-const apiKey = process.env.GEMINI_API_KEY
+const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
 const genAI = new GoogleGenerativeAI(apiKey as string)
 
 export async function findBestTutorMatch(
