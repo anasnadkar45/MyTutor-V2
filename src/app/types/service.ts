@@ -16,6 +16,7 @@ export interface ServiceProps {
     _count?: {
         Booking?: number
     }
+    averageRating?: number
 }
 
 export interface AvailableSlotType {

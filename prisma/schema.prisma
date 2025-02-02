@@ -110,6 +110,8 @@ model Service {
   Booking        Booking[]
   User           User?           @relation(fields: [userId], references: [id])
   userId         String?
+  ratings        Rating[]
+  averageRating  Float?
 }
 
 model AvailableSlot {
@@ -134,7 +136,18 @@ model Booking {
   serviceId       String?
   AvailableSlot   AvailableSlot? @relation(fields: [availableSlotId], references: [id])
   availableSlotId String?
-  
+  Rating          Rating?
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  stars     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Booking   Booking  @relation(fields: [bookingId], references: [id])
+  bookingId String   @unique
+  Service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
 }
 
 enum BookingStatus {

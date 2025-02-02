@@ -43,7 +43,7 @@ const page = async ({ params }: { params: { id: string } }) => {
                         <CardTitle className='flex justify-between items-center mb-4'>
                             <h1 className='text-muted'>{service?.User?.name}</h1>
                             <Badge className='bg-foreground hover:bg-foreground/90'>
-                                <span className='text-xl mr-3 text-background'>5  </span><Star fill='#f0b026' />
+                                <span className="text-xl mr-3 text-background">{service?.averageRating ? service?.averageRating.toFixed(1) : "N/A"}</span><Star fill='#f0b026' />
                             </Badge>
                         </CardTitle>
                         <CardDescription className='flex justify-between items-center'>
@@ -74,7 +74,7 @@ const page = async ({ params }: { params: { id: string } }) => {
                         <p>{service?.description}</p>
                     </CardFooter>
                 </Card>
-                <BookService service={service as any}/>
+                <BookService service={service as any} />
             </Wrapper>
         </div >
     )

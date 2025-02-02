@@ -343,6 +343,185 @@ export async function deleteService(prevState: any, formData: FormData) {
     }
 }
 
+const completeBookingSchema = z.object({
+    bookingId: z.string().cuid(),
+})
+
+export async function completeBooking(prevState: any, formData: FormData) {
+    const user = await getUserData()
+    if (!user) {
+        return {
+            status: "error",
+            message: "You must be logged in to complete a booking.",
+        }
+    }
+
+    const validateFields = completeBookingSchema.safeParse({
+        bookingId: formData.get("bookingId"),
+    })
+
+    if (!validateFields.success) {
+        return {
+            status: "error",
+            message: "Invalid booking data.",
+            errors: validateFields.error.flatten().fieldErrors,
+        }
+    }
+
+    try {
+        const booking = await prisma.booking.findUnique({
+            where: { id: validateFields.data.bookingId },
+        })
+
+        if (!booking) {
+            return {
+                status: "error",
+                message: "Booking not found.",
+            }
+        }
+
+        if (booking.userId !== user.id) {
+            return {
+                status: "error",
+                message: "You can only complete your own bookings.",
+            }
+        }
+
+        const updatedBooking = await prisma.booking.update({
+            where: { id: validateFields.data.bookingId },
+            data: { status: "Completed" },
+        })
+        if (updatedBooking) {
+            const state: State = {
+                status: "success",
+                message: "Booking marked as completed successfully.",
+            }
+            return state
+        }
+
+        revalidatePath(`/learner/bookings/${validateFields.data.bookingId}`)
+
+        return {
+            status: "success",
+            message: "Booking marked as completed successfully.",
+        }
+    } catch (error) {
+        console.error("Error completing booking:", error)
+        return {
+            status: "error",
+            message: "An error occurred while completing the booking. Please try again later.",
+        }
+    }
+}
+
+// ----------------------------------------------------------------
+
+const ratingSchema = z.object({
+    bookingId: z.string().cuid(),
+    stars: z.number().int().min(1).max(5),
+})
+
+export async function submitRating(prevState: any, formData: FormData) {
+    const user = await getUserData()
+    if (!user) {
+        return {
+            status: "error",
+            message: "You must be logged in to submit a rating.",
+        }
+    }
+
+    const validateFields = ratingSchema.safeParse({
+        bookingId: formData.get("bookingId"),
+        stars: Number.parseInt(formData.get("stars") as string, 10),
+    })
+
+    if (!validateFields.success) {
+        return {
+            status: "error",
+            message: "Invalid rating data.",
+            errors: validateFields.error.flatten().fieldErrors,
+        }
+    }
+
+    try {
+        const booking = await prisma.booking.findUnique({
+            where: { id: validateFields.data.bookingId },
+            include: { Service: true, Rating: true },
+        })
+
+        if (!booking) {
+            return {
+                status: "error",
+                message: "Booking not found.",
+            }
+        }
+
+        if (booking.userId !== user.id) {
+            return {
+                status: "error",
+                message: "You can only rate your own bookings.",
+            }
+        }
+
+        if (booking.status !== "Completed") {
+            return {
+                status: "error",
+                message: "You can only rate completed bookings.",
+            }
+        }
+
+        if (booking.Rating) {
+            return {
+                status: "error",
+                message: "You have already submitted a rating for this booking.",
+            }
+        }
+
+        const rating = await prisma.rating.create({
+            data: {
+                stars: validateFields.data.stars,
+                bookingId: validateFields.data.bookingId,
+                serviceId: booking.serviceId!,
+            },
+        })
+
+        // Update the service's average rating
+        const serviceRatings = await prisma.rating.findMany({
+            where: { serviceId: booking.serviceId! },
+        })
+
+        const totalStars = serviceRatings.reduce((sum, rating) => sum + rating.stars, 0)
+        const averageRating = totalStars / serviceRatings.length
+
+        await prisma.service.update({
+            where: { id: booking.serviceId! },
+            data: { averageRating },
+        })
+
+        revalidatePath(`/learner/bookings/${validateFields.data.bookingId}`)
+        revalidatePath(`/learner/discover/${booking.serviceId}`)
+
+        if (rating) {
+            return {
+                status: "success",
+                message: "Rating submitted successfully.",
+            }
+        }
+
+        const state: State = {
+            status: "success",
+            message: "Rating submitted successfully.",
+        }
+        return state
+    } catch (error) {
+        console.error("Error submitting rating:", error)
+        return {
+            status: "error",
+            message: "An error occurred while submitting the rating. Please try again later.",
+        }
+    }
+}
+
 // ----------------------------------------------------------------
 
 const timeSlotSchema = z.object({
