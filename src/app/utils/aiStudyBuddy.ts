@@ -25,7 +25,7 @@ export async function getAIStudyBuddyResponse(
   `
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" })
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
     const result = await model.generateContent(prompt)
     return result.response.text().trim()
   } catch (error) {
